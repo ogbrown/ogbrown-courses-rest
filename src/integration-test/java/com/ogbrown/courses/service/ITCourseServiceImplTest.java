@@ -74,7 +74,7 @@ public class ITCourseServiceImplTest {
         assertEquals("Beginning Book", course.getTextBooks().iterator().next().getTitle());
         assertEquals("some1", course.getPrerequisitesShortNames().toLowerCase());
         assertTrue(course.getLessonPlanMap().values().iterator().next().iterator().next().getLesson().contains("lesson plan"));
-        assertEquals(LocalDate.of(2017,10,24),course.getCourseOfferings().iterator().next().getStart());
+        assertEquals(LocalDate.of(2017,10,25),course.getCourseOfferings().iterator().next().getStart());
 
     }
     @Test
