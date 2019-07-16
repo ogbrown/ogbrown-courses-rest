@@ -1,4 +1,10 @@
 spring:
+  profiles:
+    active: ${SPRING_PROFILE:"default"}
+
+---
+
+spring:
   profiles: default
   profiles.include:
     - devdb
@@ -16,7 +22,7 @@ spring:
     enabled: true
 server:
   servlet:
-    context-path: ogbrown-courses
+    context-path: /
   error:
     whitelabel.enabled: false
 management:
@@ -26,11 +32,11 @@ management:
         include: "*"
 logging:
   level:
-    root: warn
+    root: info
     com.ogbrown: trace
     org.apache: warn
-    org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: warn
-    org.springframework.web: warn
+    org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: info
+    org.springframework.web: info
     org.hibernate: warn
     org.hibernate.SQL: warn
 
@@ -57,3 +63,120 @@ spring:
           import_files: import.sql
         show_sql: false
         format_sql: false
+---
+spring.profiles: proddb
+spring:
+  datasource:
+    initialization-mode: never
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    #We would NEVER use a root account, except on localhost for local testing
+    url: jdbc:mysql://sbogb-rds-mysql8-e2c.crvmjxdhbtvr.us-east-2.rds.amazonaws.com/ogbrown_courses_demo2?autoReconnect=true&useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true
+    username: user
+    password: user123
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: false
+    hibernate:
+      #We would NEVER leave this as create, except while evolving the db design in dev
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc.time_zone: UTC
+        hbm2ddl:
+          import_files: import.sql
+        show_sql: false
+        format_sql: false
+---
+spring.profiles: test
+spring:
+  datasource:
+    initialization-mode: never
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    #We would NEVER use a root account, except on localhost for local testing
+    url: jdbc:mysql://localhost:3306/ogbrown_courses_demo2?autoReconnect=true&useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true
+    username: user
+    password: user123
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: false
+    hibernate:
+      #We would NEVER leave this as create, except while evolving the db design in dev
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc.time_zone: UTC
+        hbm2ddl:
+          import_files: import-test.sql
+        show_sql: false
+        format_sql: false
+  http:
+    log-request-details: true
+  jmx:
+    enabled: true
+server:
+  servlet:
+    context-path: /ogbrown-courses
+  error:
+    whitelabel.enabled: false
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+logging:
+  level:
+    root: warn
+    com.ogbrown: trace
+    org.apache: warn
+    org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: warn
+    org.springframework.web: warn
+    org.hibernate: warn
+    org.hibernate.SQL: warn
+
+---
+spring.profiles: jenkins
+spring:
+  datasource:
+    initialization-mode: never
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    #We would NEVER use a root account, except on localhost for local testing
+    url: jdbc:mysql://jenkins_db_1:3306/ogbrown_courses_demo2?autoReconnect=true&useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true
+    username: user
+    password: user123
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: false
+    hibernate:
+      #We would NEVER leave this as create, except while evolving the db design in dev
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc.time_zone: UTC
+        hbm2ddl:
+          import_files: import-test.sql
+        show_sql: false
+        format_sql: false
+  http:
+    log-request-details: true
+  jmx:
+    enabled: true
+server:
+  servlet:
+    context-path: /ogbrown-courses
+  error:
+    whitelabel.enabled: false
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+logging:
+  level:
+    root: warn
+    com.ogbrown: trace
+    org.apache: warn
+    org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: warn
+    org.springframework.web: warn
+    org.hibernate: warn
+    org.hibernate.SQL: warn
+

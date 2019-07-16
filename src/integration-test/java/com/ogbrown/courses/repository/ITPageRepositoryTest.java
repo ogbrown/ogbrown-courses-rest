@@ -38,7 +38,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 @RunWith(SpringRunner.class)
-@ActiveProfiles("test")
+@ActiveProfiles("jenkins")
 @DataJpaTest
 @Transactional
 @AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE)
