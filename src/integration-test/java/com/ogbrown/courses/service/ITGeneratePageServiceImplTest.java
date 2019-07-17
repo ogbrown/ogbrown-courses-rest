@@ -40,7 +40,7 @@ import static org.junit.Assert.assertEquals;
 
 
 @RunWith(SpringRunner.class)
-@ActiveProfiles("jenkins")
+//@ActiveProfiles("jenkins")
 @SpringBootTest
 @Transactional
 @AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE)
